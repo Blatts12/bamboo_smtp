@@ -513,6 +513,11 @@ defmodule Bamboo.SMTPAdapter do
     Keyword.update(config, :tls_options, [{:depth, value}], fn c -> [{:depth, value} | c] end)
   end
 
+  defp to_gen_smtp_server_config({:tls_server_name_indication, value}, config)
+       when is_integer(value) and value >= 0 do
+    Keyword.update(config, :tls_options, [{:server_name_indication, value}], fn c -> [{:server_name_indication, value} | c] end)
+  end
+
   defp to_gen_smtp_server_config({:tls_verify_fun, value}, config) when is_tuple(value) do
     Keyword.update(config, :tls_options, [{:verify_fun, value}], fn c ->
       [{:verify_fun, value} | c]
